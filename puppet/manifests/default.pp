@@ -57,6 +57,7 @@ vcsrepo { $refinery_platform:
   ensure => present,
   provider => git,
   source => $repo_url,
+  revision => 'separate_deployment',
   user => $appuser,
   group => $appuser,
 }
