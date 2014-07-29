@@ -58,3 +58,6 @@ puppet/.librarian/
 puppet/Puppetfile.lock
 puppet/modules
 .vagrant/
+
+# PyCharm
+.idea/
