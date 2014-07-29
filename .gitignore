@@ -57,3 +57,4 @@ refinery-platform/
 puppet/.librarian/
 puppet/Puppetfile.lock
 puppet/modules
+.vagrant/
