@@ -31,8 +31,7 @@ from fabric.contrib.files import exists, upload_template
 from fabric.decorators import task, with_settings
 from fabric.operations import require, open_shell
 from fabric.utils import puts
-from fabtools.vagrant import vagrant_settings
-
+from fabtools.vagrant import vagrant
 
 env.local_project_dir = os.path.dirname(os.path.abspath(__file__))
 env.local_template_dir = os.path.join(env.local_project_dir, "fabric")
@@ -97,11 +96,11 @@ def directory_structure_config():
 
 
 @task
-def vagrant():
-    '''Configure environment for deployment on Vagrant VM
+def vm():
+    """Configure environment for deployment on Vagrant VM
 
-    '''
-    env.vagrant = True
+    """
+    execute(vagrant)
     env.refinery_app_dir = "/vagrant/refinery-platform"
     env.refinery_project_dir = os.path.join(env.refinery_app_dir, "refinery")
     env.refinery_virtualenv_name = "refinery-platform"
@@ -551,7 +550,7 @@ def setup_refinery():
 #    execute(refinery_changepassword("admin"))
 
 
-@task
+@task(alias="deploy")
 @with_settings(user=env.project_user)
 def update_refinery():
     '''Pull code updates from the Github Refinery repository
@@ -573,15 +572,6 @@ def update_refinery():
         run("supervisorctl restart all")
     with cd(os.path.join(env.refinery_project_dir)):
         run("touch {refinery_project_dir}/wsgi.py".format(**env))
-
-
-@task
-def deploy():
-    if env.vagrant:
-        with vagrant_settings():
-            execute(update_refinery)
-    else:
-        execute(update_refinery)
 
 
 @task
