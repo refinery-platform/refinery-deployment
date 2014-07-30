@@ -30,6 +30,6 @@ Configure VM and deploy Refinery:
 
 ### Troubleshooting
 
-If you run into a build error when trying to install Python dependencies:
+If you run into a build error in OS X when trying to install Python dependencies:
 
     $ export C_INCLUDE_PATH=/usr/local/include
